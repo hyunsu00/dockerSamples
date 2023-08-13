@@ -1,0 +1,59 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// docker buildx build --load --build-arg BUILDKIT_INLINE_CACHE=1 -f /tmp/devcontainercli-hyunsu00/container-features/0.50.0-1691948853585/Dockerfile-with-features \
+// -t centos-dev:7 --target dev_containers_target_stage --build-arg _DEV_CONTAINERS_BASE_IMAGE=dev_container_auto_added_stage_label /home/hyunsu00/github/hyunsu00/dockerSamples/.devcontainer
+//
+// docker run --sig-proxy=false -a STDOUT -a STDERR --mount type=bind,source=/home/hyunsu00/github/hyunsu00/dockerSamples,target=/workspaces/dockerSamples \
+// --mount type=volume,src=vscode,dst=/vscode --mount type=bind,src=/run/user/1000/wayland-0,dst=/tmp/vscode-wayland-6f16541b-f7be-4b99-8cfb-f655867229ed.sock \
+// -l devcontainer.local_folder=\\wsl.localhost\Ubuntu-22.04\home\hyunsu00\github\hyunsu00\dockerSamples \
+// -l devcontainer.config_file=/home/hyunsu00/github/hyunsu00/dockerSamples/.devcontainer/devcontainer.json \
+// --name=centos7-dev --volume=/etc/localtime:/etc/localtime:ro --env=TZ=Asia/Seoul --privileged \
+// --entrypoint /bin/sh centos-dev:7 -c echo Container started trap "exit 0" 15 exec "$@" while sleep 1 & wait $!; do :; done
+{
+	"image": "centos-dev:7",
+	"name": "centos7-dev",
+	"build": {
+		"dockerfile": "Dockerfile",
+	},
+	"runArgs": [
+		"--name=centos7-dev",
+		"--volume=/etc/localtime:/etc/localtime:ro",
+		"--env=TZ=Asia/Seoul"
+	],
+
+	// VS Code가 종료된 후에도 컨테이너를 계속 실행
+	// 디폴트 : "stopContainer"
+	// "shutdownAction":"none",
+
+	// 시스템의 모든 장치에 접근할 수 있으며 커널의 기능을 대부분 사용 설정
+	// 디폴트 : false
+	"privileged": true,
+
+	// containerUser또는 remoteUser이 지정된 경우 사용자의 UID/GID는 
+	// 로컬 사용자의 UID/GID와 일치하도록 업데이트되어 바인드 마운트의 권한 문제를 방지
+	// 디폴트 : true
+	// "updateRemoteUserUID": true,
+
+	// VS Code로 접속시 로그인 유저(https://aka.ms/dev-containers-non-root)
+	// "remoteUser": "vscode",
+
+	// 컨테이너 접속시 로그인 유저 (ex)docker exec -it ~  bash 로 접속시)
+	// "containerUser": "vscode",
+
+	// 개발 컨테이너에 추가할 기능(https://containers.dev/features)
+	// "features": {},
+
+	// 'forwardPorts'를 사용하여 컨테이너 내부의 포트 목록을 로컬에서 사용할 수 있도록 함
+	// "forwardPorts": [],
+
+	// 컨테이너가 생성된 후 'postCreateCommand'를 사용하여 명령 실행.
+	// "postCreateCommand": "gcc -v",
+
+	// 도구별 속성 구성.
+	// "customizations": {
+	// 	"vscode": {
+	// 		"extensions": [
+	// 			"ms-vscode.cpptools-extension-pack"
+	// 		]
+	// 	}
+	// }
+}
