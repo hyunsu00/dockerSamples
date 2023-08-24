@@ -53,3 +53,66 @@ $ systemctl --failed
 # State: degraded 일경우 해결
 $ systemctl reset-failed
 ```
+
+```bash
+#
+# [rockylinux에서만 설치]
+# rockylinux에서는 로케일 설치를 위해서는 
+# 로케일패키를 사전 설치해야 한다.
+$ yum install -y glibc-locale-source
+
+# 한국어 로케일 데이터베이스 생성
+$ localedef -i ko_KR -f UTF-8 ko_KR.utf8
+
+#
+# centos 7 이상 (레드햇계열)
+# /etc/locale.conf에 저장됨
+# 시스템로케일 확인
+$ localectl status
+$ cat /etc/locale.conf
+$ export
+$ date
+# localectl로 설정 가능한 로케일 목록 확인
+$ localectl list-locales
+# localectl 명령어로 로케일 변경
+$ localectl set-locale "LANG=ko_KR.UTF-8"
+$ source /etc/locale.conf
+
+#
+# 변경 사항 확인
+#
+$ localectl status
+$ cat /etc/locale.conf
+$ export
+$ date
+```
+
+```bash
+#
+# ubuntu 22.04 로케일 설치를 위해서는 
+# 로케일패키지를 사전 설치해야 한다.
+$ apt-get install -y locales
+# 한국어 로케일 데이터베이스 생성
+$ localedef -i ko_KR -f UTF-8 ko_KR.utf8
+
+#
+# ubuntu 22.04
+# /etc/default/locale에 저장됨
+# 시스템로케일 확인
+$ localectl status
+$ export
+$ date
+# localectl로 설정 가능한 로케일 목록 확인
+$ localectl list-locales
+# localectl 명령어로 로케일 변경
+$ localectl set-locale "LANG=ko_KR.UTF-8"
+$ source /etc/default/locale
+
+#
+# 변경 사항 확인
+#
+$ localectl status
+$ cat /etc/default/locale
+$ export
+$ date
+```
