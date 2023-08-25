@@ -20,60 +20,92 @@ docker run --entrypoint="" cmd-entrypoint:latest echo CMD 4
 ```
 
 ## systemctl
+
 ```bash
+#
+# ubuntu 22.04
+#
 $ docker build . -t systemctl-ubuntu:22.04 -f ./systemctl/ubuntu22.04.Dockerfile
 $ docker run -d --privileged --name systemctl-ubuntu \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 systemctl-ubuntu:22.04
+
 $ docker exec -it systemctl-ubuntu bash
 # 도커내부
 $ systemctl status
 ```
 
 ```bash
+#
+# rockylinux8.8
+#
 $ docker build . -t systemctl-rockylinux:8.8 -f ./systemctl/rockylinux8.8.Dockerfile
 $ docker run -d --privileged --name systemctl-rockylinux \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 systemctl-rockylinux:8.8
+
 $ docker exec -it systemctl-rockylinux bash
 # 도커내부
 $ systemctl status
 ```
 
 ```bash
+#
+# rhel8.6
+#
+$ docker build . -t systemctl-rhel:8.6 -f ./systemctl/rhel8.6.Dockerfile
+$ docker run -d --privileged --name systemctl-rhel \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+systemctl-rhel:8.6
+
+$ docker exec -it systemctl-rhel bash
+# 도커내부
+$ systemctl status
+```
+
+```bash
+#
+# centos7
+#
 $ docker build . -t systemctl-centos:7 -f ./systemctl/centos7.Dockerfile
 $ docker run -d --privileged --name systemctl-centos \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 systemctl-centos:7
+
 $ docker exec -it systemctl-centos bash
 # 도커내부
 $ systemctl status
+
 # State: degraded 일경우 실패한 서비스 파악
 $ systemctl --failed
+
 # State: degraded 일경우 해결
 $ systemctl reset-failed
 ```
 
 ```bash
 #
-# [rockylinux에서만 설치]
-# rockylinux에서는 로케일 설치를 위해서는 
-# 로케일패키를 사전 설치해야 한다.
+# [레드햇계열] - 버전 7 이상
+#
+# [rockylinux8.8, rhel8.6 에서만 설치] 
+# 로케일패키 사전 설치
 $ yum install -y glibc-locale-source
 
-# 한국어 로케일 데이터베이스 생성
+# [공통] 한국어 로케일 데이터베이스 생성
 $ localedef -i ko_KR -f UTF-8 ko_KR.utf8
 
 #
-# centos 7 이상 (레드햇계열)
+# [공통] centos 7 이상 (레드햇계열)
 # /etc/locale.conf에 저장됨
 # 시스템로케일 확인
 $ localectl status
 $ cat /etc/locale.conf
 $ export
 $ date
+
 # localectl로 설정 가능한 로케일 목록 확인
 $ localectl list-locales
+
 # localectl 명령어로 로케일 변경
 $ localectl set-locale "LANG=ko_KR.UTF-8"
 $ source /etc/locale.conf
