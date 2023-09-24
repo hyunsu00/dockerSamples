@@ -148,3 +148,26 @@ $ cat /etc/default/locale
 $ export
 $ date
 ```
+
+## Java
+
+```bash
+#
+# ubuntu22.04.java.maven.tomcat
+#
+$ docker build . \
+--build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=vscode \
+-t ubuntu.java.maven.tomcat:22.04 \
+-f ./java/ubuntu22.04.java.maven.tomcat.Dockerfile
+
+$ docker run -d --privileged --name ubuntu.java.maven.tomcat \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+ubuntu.java.maven.tomcat:22.04
+
+$ docker run -d --name ubuntu.java.maven.tomcat \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+ubuntu.java.maven.tomcat:22.04 \
+tail -f /dev/null
+
+$ docker exec -it ubuntu.java.maven.tomcat bash
+```
