@@ -12,11 +12,11 @@
 
 
 ```bash
-docker build . -t cmd-entrypoint:latest -f ./CMD_ENTRYPOINT/Dockerfile
-docker run cmd-entrypoint:latest
-docker run cmd-entrypoint:latest echo CMD 3
-docker run -it --entrypoint /bin/bash cmd-entrypoint:latest
-docker run --entrypoint="" cmd-entrypoint:latest echo CMD 4
+$ docker build . -t cmd-entrypoint:latest -f ./CMD_ENTRYPOINT/Dockerfile
+$ docker run cmd-entrypoint:latest
+$ docker run cmd-entrypoint:latest echo CMD 3
+$ docker run -it --entrypoint /bin/bash cmd-entrypoint:latest
+$ docker run --entrypoint="" cmd-entrypoint:latest echo CMD 4
 ```
 
 ## systemctl
