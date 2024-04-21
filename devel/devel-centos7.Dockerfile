@@ -62,7 +62,7 @@ RUN python3 -m pip install playwright==1.30.0 && \
 RUN sudo yum install -y atk \
     at-spi2-atk \
     libdrm \
-    cups \
+    cups-libs \
     libXcomposite \
     libxkbcommon \
     pango \
