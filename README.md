@@ -1,8 +1,11 @@
 # dockerSamples
 
 ## CMD,ENTRYPOINT
-###[Docker EntryPoint를 사용하는 방법](https://refine.dev/blog/docker-entrypoint/#introduction)
+
+### [Docker EntryPoint를 사용하는 방법](https://refine.dev/blog/docker-entrypoint/#introduction)
+
 ### CMD, ENTRYPOINT 요약
+
 |                           |No ENTRYPOINT              |ENTRYPOINT exec—entry pl—entry |ENTRYPOINT ["exec—entry", “ pl—entry"]         |
 |---------------------------|---------------------------|-------------------------------|-----------------------------------------------|
 |No CMD                     |오류, 허용되지 않음         |/bin/sh -c exec—entry pl—entry |exec—entry pl—entry                            |
@@ -10,13 +13,12 @@
 |CMD ["p1—cmd", "p2—cmd"]   |pl—cmd p2—cmd              |/bin/sh -c exec—entry pl—entry |exec—entry pl—entry pl—cmd p2—cmd              |
 |CMD exec—cmd pl—cmd        |/bin/sh -c exec—cmd pl—cmd |/bin/sh -c exec—entry pl—entry |exec—entry pl—entry /bin/sh -c exec—cmd pl-cmd |
 
-
 ```bash
-$ docker build . -t cmd-entrypoint:latest -f ./CMD_ENTRYPOINT/Dockerfile
-$ docker run cmd-entrypoint:latest
-$ docker run cmd-entrypoint:latest echo CMD 3
-$ docker run -it --entrypoint /bin/bash cmd-entrypoint:latest
-$ docker run --entrypoint="" cmd-entrypoint:latest echo CMD 4
+docker build . -t cmd-entrypoint:latest -f ./CMD_ENTRYPOINT/Dockerfile
+docker run cmd-entrypoint:latest
+docker run cmd-entrypoint:latest echo CMD 3
+docker run -it --entrypoint /bin/bash cmd-entrypoint:latest
+docker run --entrypoint="" cmd-entrypoint:latest echo CMD 4
 ```
 
 ## systemctl
@@ -88,7 +90,7 @@ $ systemctl reset-failed
 # [레드햇계열] - 버전 7 이상
 #
 # [rockylinux8.8, rhel8.6 에서만 설치] 
-# 로케일패키 사전 설치
+# 로케일패키지 사전 설치
 $ yum install -y glibc-locale-source
 
 # [공통] 한국어 로케일 데이터베이스 생성
@@ -170,4 +172,21 @@ ubuntu.java.maven.tomcat:22.04 \
 tail -f /dev/null
 
 $ docker exec -it ubuntu.java.maven.tomcat bash
+```
+
+## Dockerfile
+
+```dockerfile
+# sudo password 없이 유저 생성
+## 1
+RUN groupadd --gid $GID $UNAME && \
+    useradd --uid $UID --gid $GID -m $UNAME && \
+    echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME && \
+    chmod 0440 /etc/sudoers.d/$UNAME
+## 2
+RUN groupadd --gid $GID $UNAME && \
+    useradd --uid $UID --gid $GID -m $UNAME && \
+    echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# gosu 설치
 ```
