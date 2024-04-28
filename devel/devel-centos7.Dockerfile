@@ -25,8 +25,8 @@ RUN yum install -y dnf-plugins-core \
 RUN yum groupinstall -y "Development Tools"
 
 # python3 설치 (3.11.5)
-RUN yum install -y openssl11-devel libffi-devel bzip2-devel && \
-    curl -o /tmp/Python-3.11.5.tgz https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz && \
+RUN yum install -y openssl11-devel libffi-devel bzip2-devel
+RUN curl -o /tmp/Python-3.11.5.tgz https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz && \
     cd /tmp/ && \
     tar -zxvf Python-3.11.5.tgz && \
     cd Python-3.11.5 && \
