@@ -4,7 +4,7 @@ FROM rockylinux:8.8
 RUN yum update -y && yum clean all && yum install -y sudo
 
 # clear 커맨드 추가
-RUN yum install ncurses
+RUN yum install -y ncurses
 
 # Locale 설정
 RUN yum install -y glibc-locale-source && \
@@ -17,22 +17,41 @@ RUN sed -i -r -e \
     '/^\s*Defaults\s+secure_path/ s[=(.*)[=\1:/usr/local/bin[' \
     /etc/sudoers
 
-# gosu 추가   
-ENV GOSU_VERSION=1.17
-RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64" && \
-    chmod +x /usr/local/bin/gosu
+# # gosu 추가   
+# ENV GOSU_VERSION=1.17
+# RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64" && \
+#     chmod +x /usr/local/bin/gosu
 
-#
-# frontend 설치 (v16.13.2)
-#
-COPY ./node-v16.13.2-linux-x64.tar.xz /tmp/
-RUN cd /tmp/ && \
-    tar -xvf node-v16.13.2-linux-x64.tar.xz && \
-    cd ./node-v16.13.2-linux-x64/ && \
-    cp -rf ./* /usr/local/ && \
-    cd .. && \
-    rm -rf ./node-v16.13.2-linux-x64/ && \
-    rm -f node-v16.13.2-linux-x64.tar.xz
+# #
+# # frontend 설치 (v16.13.2)
+# #
+# COPY ./node-v16.13.2-linux-x64.tar.xz /tmp/
+# RUN cd /tmp/ && \
+#     tar -xvf node-v16.13.2-linux-x64.tar.xz && \
+#     cd ./node-v16.13.2-linux-x64/ && \
+#     cp -rf ./* /usr/local/ && \
+#     cd .. && \
+#     rm -rf ./node-v16.13.2-linux-x64/ && \
+#     rm -f node-v16.13.2-linux-x64.tar.xz
+
+RUN dnf groupinstall -y "Development Tools" && \
+    dnf install -y cmake
+
+RUN dnf install -y openssl-devel
+
+# mongo-c-driver 설치 (v1.17.0)
+COPY ./mongo-c-driver-1.17.0/ /tmp/mongo-c-driver-1.17.0/
+RUN cd /tmp/mongo-c-driver-1.17.0/ && \
+    tar -xzvf ./mongo-c-driver-1.17.0.tar.gz && \
+    patch -p4 ./mongo-c-driver-1.17.0/src/libmongoc/tests/test-mongoc-cache.c < ./test-mongoc-cache.c.patch && \
+    cd mongo-c-driver-1.17.0 && \
+    mkdir cmake-build && \
+    cd cmake-build && \
+    CFLAGS=-fPIC CXXFLAGS=-fPIC cmake -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF -DCMAKE_BUILD_TYPE=Release .. && \
+    make -j8 && \
+    make install && \
+    cd ../../../ && \
+    rm -rf ./mongo-c-driver-1.17.0/
 
 #
 # 유저 생성
