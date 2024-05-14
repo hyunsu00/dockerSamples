@@ -1,4 +1,4 @@
-FROM redhat/ubi8:8.6
+FROM redhat/ubi9:9.2
 
 # dnf 패키지 매니저 캐시 정리
 RUN dnf clean all
@@ -19,15 +19,22 @@ RUN dnf install -y glibc-locale-source && \
 ENV LANG ko_KR.utf8
 
 # EPEL Repository 설치
-RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
-# python2, python3.11, python3.11-pip 설치 및 python 기본버전은 python2로 실행
-RUN dnf install -y python2 python3.11 python3.11-pip && \
-    alternatives --set python /usr/bin/python2
+# python3.11, python3.11-pip 설치 및 python, python3 기본버전은 python3.11로 실행
+RUN dnf install -y python3.11 python3.11-pip
+RUN alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1 && \
+    alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 2 && \
+    alternatives --set python3 /usr/bin/python3.11 && \
+    alternatives --install /usr/bin/python python /usr/bin/python3.9 1 && \
+    alternatives --install /usr/bin/python python /usr/bin/python3.11 2 && \
+    alternatives --set python /usr/bin/python3.11 && \
+    sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/dnf && \
+    sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/yum
 
 #
 # 유저 생성
-#al
+#
 # 빌드시점 UNAME, UID, GID 설정
 ARG UNAME=devuser
 ARG UID=1000

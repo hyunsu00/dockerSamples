@@ -190,3 +190,24 @@ RUN groupadd --gid $GID $UNAME && \
 
 # gosu 설치
 ```
+
+## ubi9.9.2
+
+```bash
+$ ls -l /usr/bin/pyth*
+
+# 어떤 버전의 파이썬을 선택했는지 확인
+$ sudo update-alternatives --config python3
+
+# 설정
+$ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+$ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 2
+
+# dnf / yum python3 샤방코드 python3.9로 변경
+$ sudo sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/dnf
+$ sudo sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/yum
+
+# 샤방코드 변경 확인
+$ head -1 /usr/bin/dnf
+$ head -1 /usr/bin/yum
+```
