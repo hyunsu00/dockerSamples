@@ -47,6 +47,8 @@ RUN sudo apt clean && sudo apt autoremove && \
 #
 # wsl
 #
+ENV TZ=Asia/Seoul
+RUN sudo apt install -qq -y --no-install-recommends tzdata
 RUN sudo apt install -qq -y --no-install-recommends init systemd && \
     sudo rm -rf /var/lib/{apt,dpkg,cache,log}
 COPY ${docker_build_files}/wsl.conf /etc/wsl.conf
