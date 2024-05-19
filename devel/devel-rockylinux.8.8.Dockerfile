@@ -1,63 +1,28 @@
 FROM rockylinux:8.8
 
-# 패키지 업데이트 및 sudo 지원 추가
-RUN yum update -y && yum clean all && yum install -y sudo
+ARG docker_build_files=./docker-build-files
 
-# clear 커맨드 추가
-RUN yum install -y ncurses
+# sudo 지원 및 sudo /usr/local/bin 디폴트 경로 추가
+RUN dnf install -y sudo && \
+    sed -i -r -e '/^\s*Defaults\s+secure_path/ s[=(.*)[=\1:/usr/local/bin[' /etc/sudoers
+
+# 유틸리티 설치
+RUN dnf install -y ncurses wget
 
 # Locale 설정
-RUN yum install -y glibc-locale-source && \
+RUN dnf install -y glibc-locale-source && \
     localedef -i ko_KR -f UTF-8 ko_KR.utf8 && \
     echo "LANG=ko_KR.UTF-8" > /etc/locale.conf
 ENV LANG ko_KR.utf8
 
-# sudo /usr/local/bin 디퐆트 경로 추가
-RUN sed -i -r -e \
-    '/^\s*Defaults\s+secure_path/ s[=(.*)[=\1:/usr/local/bin[' \
-    /etc/sudoers
-
-# # gosu 추가   
-# ENV GOSU_VERSION=1.17
-# RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-amd64" && \
-#     chmod +x /usr/local/bin/gosu
-
-# #
-# # frontend 설치 (v16.13.2)
-# #
-# COPY ./node-v16.13.2-linux-x64.tar.xz /tmp/
-# RUN cd /tmp/ && \
-#     tar -xvf node-v16.13.2-linux-x64.tar.xz && \
-#     cd ./node-v16.13.2-linux-x64/ && \
-#     cp -rf ./* /usr/local/ && \
-#     cd .. && \
-#     rm -rf ./node-v16.13.2-linux-x64/ && \
-#     rm -f node-v16.13.2-linux-x64.tar.xz
-
-RUN dnf groupinstall -y "Development Tools" && \
-    dnf install -y cmake
-
-RUN dnf install -y openssl-devel
-
-# mongo-c-driver 설치 (v1.17.0)
-COPY ./mongo-c-driver-1.17.0/ /tmp/mongo-c-driver-1.17.0/
-RUN cd /tmp/mongo-c-driver-1.17.0/ && \
-    tar -xzvf ./mongo-c-driver-1.17.0.tar.gz && \
-    patch -p4 ./mongo-c-driver-1.17.0/src/libmongoc/tests/test-mongoc-cache.c < ./test-mongoc-cache.c.patch && \
-    cd mongo-c-driver-1.17.0 && \
-    mkdir cmake-build && \
-    cd cmake-build && \
-    CFLAGS=-fPIC CXXFLAGS=-fPIC cmake -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF -DCMAKE_BUILD_TYPE=Release .. && \
-    make -j8 && \
-    make install && \
-    cd ../../../ && \
-    rm -rf ./mongo-c-driver-1.17.0/
+# 개발툴 설치 (Development Tools)
+# 이곳에 개발툴을 설치합니다.
 
 #
 # 유저 생성
 #
 # 빌드시점 UNAME, UID, GID 설정
-ARG UNAME=hancom
+ARG UNAME=devuser
 ARG UID=1000
 ARG GID=$UID
 
@@ -73,10 +38,19 @@ WORKDIR /home/$UNAME
 # 기본 사용자 설정
 USER $UNAME
 
+# dnf 패키지 매니저 캐시 정리
+RUN sudo dnf clean all
+
+#
+# wsl
+#
+COPY ${docker_build_files}/wsl.conf /etc/wsl.conf
+RUN sudo sed -i "s/default=\$UNAME/default=$UNAME/" /etc/wsl.conf
+
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME
-COPY ./entrypoint.sh /
-COPY ./user-mapping.sh /usr/local/bin/
+COPY ${docker_build_files}/entrypoint.sh /
+COPY ${docker_build_files}/user-mapping.sh /usr/local/bin/
 RUN sudo chmod +x /entrypoint.sh && \
     sudo chmod +x /usr/local/bin/user-mapping.sh
 ENTRYPOINT ["/entrypoint.sh"]
