@@ -43,7 +43,7 @@ $ docker build \
 ```bash
 # 도커 허브 로그인
 $ docker login -u hyunsu00
-Password: 
+Password: 비번은 screet.txt
 
 # docker.io/hyunsu00/devel-node:16.13.2-bullseye 저장소 push
 $ docker push hyunsu00/devel-node:16.13.2-bullseye
