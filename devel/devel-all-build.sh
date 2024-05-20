@@ -8,6 +8,13 @@ echo "build : docker.io/hyunsu00/devel-node:16.13.2-bullseye"
     docker build \
         -t hyunsu00/devel-node:16.13.2-bullseye \
         -f ./devel-node.16.13.2-bullseye.Dockerfile .
+
+    if [ $? -eq 0 ]; then
+        echo "succeed : docker.io/hyunsu00/devel-node:16.13.2-bullseye"
+    else
+        echo "failed : docker.io/hyunsu00/devel-node:16.13.2-bullseye"
+        exit 1
+    fi
 }
 
 echo "build : docker.io/hyunsu00/devel-centos:7"
@@ -16,6 +23,12 @@ echo "build : docker.io/hyunsu00/devel-centos:7"
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-centos:7 \
         -f ./devel-centos.7.Dockerfile .
+    if [ $? -eq 0 ]; then
+        echo "succeed : docker.io/hyunsu00/devel-centos:7"
+    else
+        echo "failed : docker.io/hyunsu00/devel-centos:7"
+        exit 1
+    fi
 }
 
 echo "build : docker.io/hyunsu00/devel-rockylinux:8.8"
@@ -24,6 +37,13 @@ echo "build : docker.io/hyunsu00/devel-rockylinux:8.8"
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-rockylinux:8.8 \
         -f ./devel-rockylinux.8.8.Dockerfile .
+
+    if [ $? -eq 0 ]; then
+        echo "succeed : docker.io/hyunsu00/devel-rockylinux:8.8"
+    else
+        echo "failed : docker.io/hyunsu00/devel-rockylinux:8.8"
+        exit 1
+    fi
 }
 
 echo "build : docker.io/hyunsu00/devel-ubi8:8.6"
@@ -32,6 +52,13 @@ echo "build : docker.io/hyunsu00/devel-ubi8:8.6"
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-ubi8:8.6 \
         -f ./devel-ubi8.8.6.Dockerfile .
+
+    if [ $? -eq 0 ]; then
+        echo "succeed : docker.io/hyunsu00/devel-ubi8:8.6"
+    else
+        echo "failed : docker.io/hyunsu00/devel-ubi8:8.6"
+        exit 1
+    fi
 }
 
 echo "build : docker.io/hyunsu00/devel-ubi9:9.2"
@@ -40,6 +67,13 @@ echo "build : docker.io/hyunsu00/devel-ubi9:9.2"
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-ubi9:9.2 \
         -f ./devel-ubi9.9.2.Dockerfile .
+
+    if [ $? -eq 0 ]; then
+        echo "succeed : docker.io/hyunsu00/devel-ubi9:9.2"
+    else
+        echo "failed : docker.io/hyunsu00/devel-ubi9:9.2"
+        exit 1
+    fi
 }
 
 echo "build : docker.io/hyunsu00/devel-ubuntu:22.04"
@@ -48,4 +82,11 @@ echo "build : docker.io/hyunsu00/devel-ubuntu:22.04"
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-ubuntu:22.04 \
         -f ./devel-ubuntu.22.04.Dockerfile .
+
+    if [ $? -eq 0 ]; then
+        echo "succeed : docker.io/hyunsu00/devel-ubuntu:22.04"
+    else
+        echo "failed : docker.io/hyunsu00/devel-ubuntu:22.04"
+        exit 1
+    fi
 }
