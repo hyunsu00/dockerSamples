@@ -5,11 +5,18 @@ ARG docker_build_files=./docker-build-files
 # 빌드중에만(ARG) 사용자 입력을 요구하는 것을 방지하는 설정
 ARG DEBIAN_FRONTEND=noninteractive
 
+RUN apt update
+
+# systemctl 설치
+RUN apt install -qq -y --no-install-recommends init systemd
+
 # sudo 지원 및 sudo /usr/local/bin 디폴트 경로 추가
-RUN apt update && apt install -qq -y --no-install-recommends sudo && \
+RUN apt install -qq -y --no-install-recommends sudo && \
     sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
 
-# 유틸리티 설치
+# 타임존 설정
+ENV TZ=Asia/Seoul
+RUN sudo apt install -qq -y --no-install-recommends tzdata
 
 # Locale 설정
 RUN apt install -qq -y --no-install-recommends locales && \
@@ -47,12 +54,12 @@ RUN sudo apt clean && sudo apt autoremove && \
 #
 # wsl
 #
-ENV TZ=Asia/Seoul
-RUN sudo apt install -qq -y --no-install-recommends tzdata
-RUN sudo apt install -qq -y --no-install-recommends init systemd && \
-    sudo rm -rf /var/lib/{apt,dpkg,cache,log}
 COPY ${docker_build_files}/wsl.conf /etc/wsl.conf
 RUN sudo sed -i "s/default=\$UNAME/default=$UNAME/" /etc/wsl.conf
+
+#
+# 유틸리티 설치
+#
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME

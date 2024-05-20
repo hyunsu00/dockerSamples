@@ -1,8 +1,8 @@
 FROM node:16.13.2-bullseye
 
 ARG docker_build_files=./docker-build-files
-ARG UNAME=node
 ARG DEBIAN_FRONTEND=noninteractive
+ARG UNAME=node
 
 # 패키지 업데이트 및 sudo 지원 추가
 # sudo /usr/local/bin 디폴트 경로 추가
