@@ -5,24 +5,25 @@ ARG docker_build_files=./docker-build-files
 # 빌드중에만(ARG) 사용자 입력을 요구하는 것을 방지하는 설정
 ARG DEBIAN_FRONTEND=noninteractive
 
+# 패키지 목록 업데이트
 RUN apt update
 
 # systemctl 설치
 RUN apt install -qq -y --no-install-recommends init systemd
 
-# sudo 지원 및 sudo /usr/local/bin 디폴트 경로 추가
-RUN apt install -qq -y --no-install-recommends sudo && \
-    sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
-
 # 타임존 설정
 ENV TZ=Asia/Seoul
-RUN sudo apt install -qq -y --no-install-recommends tzdata
+RUN apt install -qq -y --no-install-recommends tzdata
 
 # Locale 설정
 RUN apt install -qq -y --no-install-recommends locales && \
     localedef -i ko_KR -f UTF-8 ko_KR.UTF-8 && \
     echo "LANG=ko_KR.UTF-8" > /etc/default/locale
 ENV LANG ko_KR.UTF-8
+
+# sudo 지원 및 sudo /usr/local/bin 디폴트 경로 추가
+RUN apt install -qq -y --no-install-recommends sudo && \
+    sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
 
 # 개발툴 설치 (Development Tools)
 # 이곳에 개발툴을 설치합니다.

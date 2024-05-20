@@ -2,6 +2,9 @@ FROM centos:7
 
 ARG docker_build_files=./docker-build-files
 
+# 패키지 목록 업데이트
+RUN yum makecache
+
 # 타임존 설정
 ENV TZ=Asia/Seoul
 
