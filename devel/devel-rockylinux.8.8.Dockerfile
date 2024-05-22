@@ -49,6 +49,7 @@ RUN sudo dnf clean all
 #
 COPY ${docker_build_files}/wsl.conf /etc/wsl.conf
 RUN sudo sed -i "s/default=\$UNAME/default=$UNAME/" /etc/wsl.conf
+RUN sudo ln -sf /etc/locale.conf /etc/default/locale
 
 #
 # 유틸리티 설치

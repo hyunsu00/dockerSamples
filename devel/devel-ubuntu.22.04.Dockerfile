@@ -57,7 +57,8 @@ RUN sudo apt clean && sudo apt autoremove && \
 #
 COPY ${docker_build_files}/wsl.conf /etc/wsl.conf
 RUN sudo sed -i "s/default=\$UNAME/default=$UNAME/" /etc/wsl.conf
-
+RUN sudo sed -i "s/\(${UNAME}:.*:\)\/bin\/sh/\1\/bin\/bash/" /etc/passwd
+                
 #
 # 유틸리티 설치
 #

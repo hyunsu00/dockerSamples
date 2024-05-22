@@ -125,3 +125,23 @@ $ docker run -d --name devel-ubuntu.22.04 \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/devel-ubuntu:22.04
 ```
+
+## wsl --import
+
+```powershell
+PS > wsl --import devel-centos7 C:\wsl\devel-centos7 C:\wsl\images\wsl.devel.centos.7.tar.gz
+PS > wsl --import devel-ubi8.6 C:\wsl\devel-ubi8.6 C:\wsl\images\wsl.devel.ubi8.8.6.tar.gz
+PS > wsl --import devel-ubi9.2 C:\wsl\devel-ubi9.2 C:\wsl\images\wsl.devel.ubi9.9.2.tar.gz
+PS > wsl --import devel-rockylinux8.8 C:\wsl\devel-rockylinux8.8 C:\wsl\images\wsl.devel.rockylinux.8.8.tar.gz
+PS > wsl --import devel-ubuntu22.04 C:\wsl\devel-ubuntu22.04 C:\wsl\images\wsl.devel.ubuntu.22.04.tar.gz
+```
+
+## wsl --unregister
+
+```powershell
+PS > wsl --unregister devel-centos7
+PS > wsl --unregister devel-ubi8.6
+PS > wsl --unregister devel-ubi9.2
+PS > wsl --unregister devel-rockylinux8.8
+PS > wsl --unregister devel-ubuntu22.04
+```
