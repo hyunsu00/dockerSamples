@@ -37,6 +37,7 @@ RUN groupadd --gid $GID $UNAME && \
     echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME && \
     chmod 0440 /etc/sudoers.d/$UNAME
 
+# fixuid 설치
 RUN apt install -qq -y --no-install-recommends ca-certificates curl && \
     curl -fsSL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
     chown root:root /usr/local/bin/fixuid && \
