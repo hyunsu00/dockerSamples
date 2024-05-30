@@ -30,14 +30,14 @@ $ docker pull hyunsu00/code-server
 ## docker run
 
 ```bash
-# fixuid 실행
+# code-server 실행
 $ docker run -d --name code-server \
 -u $(id -u):$(id -g) \
--p 48080:8080 \
+-p 28443:8080 \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/code-server
 
-$ docker run -it --name code-server -p 127.0.0.1:48080:8080 \
+$ docker run -it --name code-server -p 127.0.0.1:28443:8080 \
 -v "/hancom/docker/code-server:/home/coder" \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 -u "$(id -u):$(id -g)" \
