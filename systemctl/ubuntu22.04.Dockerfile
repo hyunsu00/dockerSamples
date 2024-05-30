@@ -2,15 +2,8 @@ FROM ubuntu:22.04
 # ENV 
 # 컨테이너내 /proc/1/environ 에 저장
 
-# 패키지 업데이트 및 sudo 지원 추가
-RUN apt-get update && apt-get install -y sudo
-
 # 빌드중에만(ARG) 사용자 입력을 요구하는 것을 방지하는 설정
 ARG DEBIAN_FRONTEND=noninteractive
-
-# 파일의 텍스트 변경
-# sed -i s/이전문자열/변경문자열/g /디렉토리위치/파일명
-RUN sed -i 's/kr.archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list
 
 # -qq : 오류를 제외하고는 출력되지 않음
 RUN apt install -qq -y init systemd \

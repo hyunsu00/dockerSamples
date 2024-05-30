@@ -2,9 +2,6 @@ FROM redhat/ubi8:8.6
 # ENV 
 # 컨테이너내 /proc/1/environ 에 저장
 
-# 패키지 업데이트 및 sudo, clear 지원 추가
-RUN yum update -y && yum clean all && yum install -y sudo && yum install -y ncurses
-
 #
 #
 # Locale 설정
