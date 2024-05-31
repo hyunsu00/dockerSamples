@@ -68,7 +68,9 @@ RUN sudo ln -sf /etc/locale.conf /etc/default/locale
 #
 # 유틸리티 설치
 #
-RUN sudo yum install -y ncurses wget dumb-init
+RUN sudo yum install -y ncurses wget && \
+    sudo wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 && \
+    sudo chmod +x /usr/bin/dumb-init
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME
