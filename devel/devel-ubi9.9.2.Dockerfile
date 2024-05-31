@@ -18,6 +18,9 @@ ENV LANG ko_KR.utf8
 RUN dnf install -y sudo && \
     sed -i -r -e '/^\s*Defaults\s+secure_path/ s[=(.*)[=\1:/usr/local/bin[' /etc/sudoers
 
+# EPEL Repository 설치
+RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+    
 # 개발툴 설치 (Development Tools)
 # 이곳에 개발툴을 설치합니다.
 
@@ -34,6 +37,18 @@ RUN groupadd --gid $GID $UNAME && \
     useradd --uid $UID --gid $GID -m $UNAME && \
     echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME && \
     chmod 0440 /etc/sudoers.d/$UNAME
+
+# fixuid 설치 
+RUN ARCH="$(uname -m | sed 's/x86_64/amd64/g' | sed 's/aarch64/arm64/g')" && \
+    curl -fsSL "https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-$ARCH.tar.gz" | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $UNAME\ngroup: $UNAME\n" > /etc/fixuid/config.yml
+
+# 작업 영역을 준비하기 위해 사용자가 컨테이너 시작 시 스크립트를 실행하도록 허용합니다.
+# https://github.com/coder/code-server/issues/5177
+ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
 # 작업디렉토리설정
 WORKDIR /home/$UNAME
@@ -54,14 +69,12 @@ RUN sudo ln -sf /etc/locale.conf /etc/default/locale
 #
 # 유틸리티 설치
 #
-RUN sudo dnf install -y ncurses wget
+RUN sudo dnf install -y ncurses wget dumb-init
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME
-COPY ${docker_build_files}/entrypoint.sh /
-COPY ${docker_build_files}/user-mapping.sh /usr/local/bin/
-RUN sudo chmod +x /entrypoint.sh && \
-    sudo chmod +x /usr/local/bin/user-mapping.sh
-ENTRYPOINT ["/entrypoint.sh"]
+COPY ${docker_build_files}/entrypoint.sh /usr/bin/entrypoint.sh
+RUN sudo chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 CMD ["sleep", "infinity"]

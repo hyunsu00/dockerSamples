@@ -42,6 +42,19 @@ RUN groupadd --gid $GID $UNAME && \
     echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME && \
     chmod 0440 /etc/sudoers.d/$UNAME
 
+# fixuid 설치
+RUN apt install -qq -y --no-install-recommends ca-certificates curl && \
+    ARCH="$(dpkg --print-architecture)" && \
+    curl -fsSL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-$ARCH.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $UNAME\ngroup: $UNAME\n" > /etc/fixuid/config.yml
+
+# 작업 영역을 준비하기 위해 사용자가 컨테이너 시작 시 스크립트를 실행하도록 허용합니다.
+# https://github.com/coder/code-server/issues/5177
+ENV ENTRYPOINTD=${HOME}/entrypoint.d
+
 # 작업디렉토리설정
 WORKDIR /home/$UNAME
 
@@ -62,13 +75,12 @@ RUN sudo sed -i "s/\(${UNAME}:.*:\)\/bin\/sh/\1\/bin\/bash/" /etc/passwd
 #
 # 유틸리티 설치
 #
+RUN sudo apt install -qq -y --no-install-recommends dumb-init
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME
-COPY ${docker_build_files}/entrypoint.sh /
-COPY ${docker_build_files}/user-mapping.sh /usr/local/bin/
-RUN sudo chmod +x /entrypoint.sh && \
-    sudo chmod +x /usr/local/bin/user-mapping.sh
-ENTRYPOINT ["/entrypoint.sh"]
+COPY ${docker_build_files}/entrypoint.sh /usr/bin/entrypoint.sh
+RUN sudo chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 
 CMD ["sleep", "infinity"]

@@ -116,14 +116,15 @@ hyunsu00/devel-ubi9:9.2
 
 # docker.io/hyunsu00/devel-rockylinux:8.8 실행
 $ docker run -d --name devel-rockylinux.8.8 \
--e PUID=$(id -u) -e PGID=$(id -g) \
+-u "$(id -u):$(id -g)" \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/devel-rockylinux:8.8
 
 # docker.io/hyunsu00/devel-ubuntu:22.04 실행
 $ docker run -d --name devel-ubuntu.22.04 \
--e PUID=$(id -u) -e PGID=$(id -g) \
+-u "$(id -u):$(id -g)" \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+-e "DOCKER_USER=$USER" \
 hyunsu00/devel-ubuntu:22.04
 ```
 
