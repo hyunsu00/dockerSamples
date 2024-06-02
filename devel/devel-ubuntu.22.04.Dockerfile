@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 
 # systemctl 설치
-RUN apt-get install -qq -y --no-install-recommends init systemd 
+RUN apt-get install -qq -y --no-install-recommends apt-utils init systemd 
 
 # 타임존 설정
 ENV TZ=Asia/Seoul
