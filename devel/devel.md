@@ -94,30 +94,35 @@ $ docker pull hyunsu00/devel-ubuntu:22.04
 $ docker run -d --name devel-node.16.13.2-bullseye \
 -e PUID=$(id -u) -e PGID=$(id -g) \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+-e "DOCKER_USER=$USER" \
 hyunsu00/devel-node:16.13.2-bullseye
 
 # docker.io/hyunsu00/devel-centos:7 실행
 $ docker run -d --name devel-centos.7 \
 -e PUID=$(id -u) -e PGID=$(id -g) \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+-e "DOCKER_USER=$USER" \
  hyunsu00/devel-centos:7
 
 # docker.io/hyunsu00/devel-ubi8:8.6 실행
 $ docker run -d --name devel-rhel.8.6 \
 -e PUID=$(id -u) -e PGID=$(id -g) \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+-e "DOCKER_USER=$USER" \
 hyunsu00/devel-ubi8:8.6
 
 # docker.io/hyunsu00/devel-ubi9:9.2 실행
 $ docker run -d --name devel-rhel.9.2 \
 -e PUID=$(id -u) -e PGID=$(id -g) \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+-e "DOCKER_USER=$USER" \
 hyunsu00/devel-ubi9:9.2
 
 # docker.io/hyunsu00/devel-rockylinux:8.8 실행
 $ docker run -d --name devel-rockylinux.8.8 \
 -u "$(id -u):$(id -g)" \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+-e "DOCKER_USER=$USER" \
 hyunsu00/devel-rockylinux:8.8
 
 # docker.io/hyunsu00/devel-ubuntu:22.04 실행

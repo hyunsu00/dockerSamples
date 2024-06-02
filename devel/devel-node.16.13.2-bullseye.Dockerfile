@@ -8,7 +8,7 @@ ARG UNAME=node
 # sudo /usr/local/bin 디폴트 경로 추가
 RUN apt-get update && \
     apt-get install -y sudo && \
-    echo "$UNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    echo "$UNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 # fixuid 설치
 RUN apt install -qq -y --no-install-recommends ca-certificates curl && \

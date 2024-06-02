@@ -39,8 +39,7 @@ ARG GID=$UID
 # 유저 생성
 RUN groupadd --gid $GID $UNAME && \
     useradd --uid $UID --gid $GID -m $UNAME && \
-    echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME && \
-    chmod 0440 /etc/sudoers.d/$UNAME
+    echo "$UNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 # fixuid 설치
 RUN apt install -qq -y --no-install-recommends ca-certificates curl && \
