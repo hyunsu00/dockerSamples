@@ -6,23 +6,23 @@ ARG docker_build_files=./docker-build-files
 ARG DEBIAN_FRONTEND=noninteractive
 
 # 패키지 목록 업데이트
-RUN apt update
+RUN apt-get update
 
 # systemctl 설치
-RUN apt install -qq -y --no-install-recommends init systemd
+RUN apt-get install -qq -y --no-install-recommends init systemd 
 
 # 타임존 설정
 ENV TZ=Asia/Seoul
-RUN apt install -qq -y --no-install-recommends tzdata
+RUN apt-get install -qq -y --no-install-recommends tzdata
 
 # Locale 설정
-RUN apt install -qq -y --no-install-recommends locales && \
+RUN apt-get install -qq -y --no-install-recommends locales && \
     localedef -i ko_KR -f UTF-8 ko_KR.UTF-8 && \
     echo "LANG=ko_KR.UTF-8" > /etc/default/locale
 ENV LANG ko_KR.UTF-8
 
 # sudo 지원 및 sudo /usr/local/bin 디폴트 경로 추가
-RUN apt install -qq -y --no-install-recommends sudo && \
+RUN apt-get install -qq -y --no-install-recommends sudo && \
     sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
 
 # 개발툴 설치 (Development Tools)
@@ -42,7 +42,7 @@ RUN groupadd --gid $GID $UNAME && \
     echo "$UNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 # fixuid 설치
-RUN apt install -qq -y --no-install-recommends ca-certificates curl && \
+RUN apt-get install -qq -y --no-install-recommends ca-certificates curl && \
     ARCH="$(dpkg --print-architecture)" && \
     curl -fsSL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-$ARCH.tar.gz | tar -C /usr/local/bin -xzf - && \
     chown root:root /usr/local/bin/fixuid && \
@@ -61,7 +61,7 @@ WORKDIR /home/$UNAME
 USER $UNAME
 
 # 패키지 캐쉬 정리 및 사용되지 않는 패키지 삭제 및 설치시 사용된 데이터 삭제
-RUN sudo apt clean && sudo apt autoremove && \
+RUN sudo apt-get clean && sudo apt-get autoremove && \
     rm -rf /var/lib/{apt,dpkg,cache,log}
 
 #
@@ -74,7 +74,7 @@ RUN sudo sed -i "s/\(${UNAME}:.*:\)\/bin\/sh/\1\/bin\/bash/" /etc/passwd
 #
 # 유틸리티 설치
 #
-RUN sudo apt install -qq -y --no-install-recommends dumb-init
+RUN sudo apt-get install -qq -y --no-install-recommends dumb-init
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME
