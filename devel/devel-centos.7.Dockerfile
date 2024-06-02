@@ -73,6 +73,7 @@ RUN sudo yum install -y ncurses wget && \
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME
+ENV USER=$UNAME
 COPY ${docker_build_files}/entrypoint.sh /usr/bin/entrypoint.sh
 RUN sudo chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]

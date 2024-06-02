@@ -5,14 +5,13 @@ set -eu
 # 그렇지 않으면 현재 컨테이너 UID가 passwd 데이터베이스에 존재하지 않을 수 있습니다.
 eval "$(fixuid -q)"
 
-if [ "${DOCKER_USER-}" ]; then
-  USER="$DOCKER_USER"
-  if [ "$DOCKER_USER" != "$(whoami)" ]; then
-    echo "$DOCKER_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+if [ "${USER-}" ]; then
+  if [ "$USER" != "$(whoami)" ]; then
+    echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
     # 안타깝게도 바인드 마운트를 이동할 수 없으므로 $HOME을 변경할 수 없습니다.
     # 권한 있는 컨테이너가 필요하므로 마운트 $HOME을 새 홈에 바인딩할 수도 없습니다.
-    sudo usermod --login "$DOCKER_USER" $UNAME
-    sudo groupmod -n "$DOCKER_USER" $UNAME
+    sudo usermod --login "$USER" $UNAME
+    sudo groupmod -n "$USER" $UNAME
 
     sudo sed -i "/$UNAME/d" /etc/sudoers.d/nopasswd
   fi
