@@ -123,7 +123,6 @@ $ docker run -d --name devel-rockylinux.8.8 \
 -u "$(id -u):$(id -g)" \
 -e "USER=$USER" \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
-
 hyunsu00/devel-rockylinux:8.8
 
 # docker.io/hyunsu00/devel-ubuntu:22.04 실행
@@ -152,4 +151,25 @@ PS > wsl --unregister devel-ubi8.6
 PS > wsl --unregister devel-ubi9.2
 PS > wsl --unregister devel-rockylinux8.8
 PS > wsl --unregister devel-ubuntu22.04
+```
+
+## UID와 GID가 다를경우 초기화 완료 예제
+
+```bash
+$ docker run -d --name devel-rockylinux.8.8 \
+-u "3004:3004" \
+-e "USER=jenkins" \
+-v /etc/localtime:/etc/localtime:ro \
+-e TZ=Asia/Seoul \
+hyunsu00/devel-rockylinux:8.8
+
+$ bash -c 'echo ""; \
+printf "컨테이너 초기화 중"; \
+while ! docker exec 'devel-rockylinux.8.8' test -f "'/tmp/initialized'"; do \
+  printf "."; \
+  sleep 1; \
+done; \
+echo ""; \
+echo "컨테이너 초기화 완료"; \
+echo ""'
 ```
