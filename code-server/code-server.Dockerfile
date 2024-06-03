@@ -4,21 +4,21 @@ FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # 패키지 목록 업데이트, systemctl 설치
-RUN apt update && \
-    apt install -qq -y --no-install-recommends init systemd
+RUN apt-get update && \
+    apt-get install -qq -y --no-install-recommends apt-utils init systemd
 
 # 타임존 설정
 ENV TZ=Asia/Seoul
-RUN apt install -qq -y --no-install-recommends tzdata
+RUN apt-get install -qq -y --no-install-recommends tzdata
 
 # Locale 설정
-RUN apt install -qq -y --no-install-recommends locales && \
+RUN apt-get install -qq -y --no-install-recommends locales && \
     localedef -i ko_KR -f UTF-8 ko_KR.UTF-8 && \
     echo "LANG=ko_KR.UTF-8" > /etc/default/locale
 ENV LANG ko_KR.UTF-8
 
 # sudo 지원 및 sudo /usr/local/bin 디폴트 경로 추가
-RUN apt install -qq -y --no-install-recommends sudo && \
+RUN apt-get install -qq -y --no-install-recommends sudo && \
     sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
 
 # 유저 생성
@@ -26,7 +26,7 @@ RUN adduser --gecos '' --disabled-password coder && \
     echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 # fixuid 설치
-RUN apt install -qq -y --no-install-recommends ca-certificates curl && \
+RUN apt-get install -qq -y --no-install-recommends ca-certificates curl && \
     ARCH="$(dpkg --print-architecture)" && \
     curl -fsSL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-$ARCH.tar.gz | tar -C /usr/local/bin -xzf - && \
     chown root:root /usr/local/bin/fixuid && \
@@ -42,7 +42,7 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
 # 필요한 유틸리티 설치
-RUN apt install -qq -y --no-install-recommends dumb-init \
+RUN apt-get install -qq -y --no-install-recommends dumb-init \
     git \
     git-lfs \
     htop \
@@ -56,7 +56,7 @@ RUN apt install -qq -y --no-install-recommends dumb-init \
     zsh && \ 
     git lfs install
 # 패키지 캐쉬 정리 및 사용되지 않는 패키지 삭제 및 설치시 사용된 데이터 삭제
-RUN apt clean && apt autoremove && rm -rf /var/lib/{apt,dpkg,cache,log}
+RUN apt-get clean && apt-get autoremove && rm -rf /var/lib/{apt,dpkg,cache,log}
 
 EXPOSE 8080
 # 이렇게 하면 누군가 $DOCKER_USER를 설정하면 uid가 동일하게 유지되므로 docker-exec가 계속 작동합니다.

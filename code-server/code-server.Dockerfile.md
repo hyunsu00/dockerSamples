@@ -37,10 +37,11 @@ $ docker run -d --name code-server \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/code-server
 
-$ docker run -it --name code-server -p 127.0.0.1:28443:8080 \
+$ docker run -it --name code-server \
+-u "$(id -u):$(id -g)" \
+-e "USER=$USER" \
+-p 127.0.0.1:28443:8080 
 -v "/hancom/docker/code-server:/home/coder" \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
--u "$(id -u):$(id -g)" \
--e "DOCKER_USER=$USER" \
 hyunsu00/code-server
 ```

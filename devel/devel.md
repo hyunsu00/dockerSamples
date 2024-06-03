@@ -93,43 +93,44 @@ $ docker pull hyunsu00/devel-ubuntu:22.04
 # docker.io/hyunsu00/devel-node:16.13.2-bullseye 실행
 $ docker run -d --name devel-node.16.13.2-bullseye \
 -u "$(id -u):$(id -g)" \
--v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 -e "USER=$USER" \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/devel-node:16.13.2-bullseye
 
 # docker.io/hyunsu00/devel-centos:7 실행
 $ docker run -d --name devel-centos.7 \
 -u "$(id -u):$(id -g)" \
--v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 -e "USER=$USER" \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
  hyunsu00/devel-centos:7
 
 # docker.io/hyunsu00/devel-ubi8:8.6 실행
 $ docker run -d --name devel-rhel.8.6 \
 -u "$(id -u):$(id -g)" \
--v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 -e "USER=$USER" \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/devel-ubi8:8.6
 
 # docker.io/hyunsu00/devel-ubi9:9.2 실행
 $ docker run -d --name devel-rhel.9.2 \
 -u "$(id -u):$(id -g)" \
--v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 -e "USER=$USER" \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/devel-ubi9:9.2
 
 # docker.io/hyunsu00/devel-rockylinux:8.8 실행
 $ docker run -d --name devel-rockylinux.8.8 \
 -u "$(id -u):$(id -g)" \
--v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 -e "USER=$USER" \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
+
 hyunsu00/devel-rockylinux:8.8
 
 # docker.io/hyunsu00/devel-ubuntu:22.04 실행
 $ docker run -d --name devel-ubuntu.22.04 \
 -u "$(id -u):$(id -g)" \
--v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 -e "USER=$USER" \
+-v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/devel-ubuntu:22.04
 ```
 

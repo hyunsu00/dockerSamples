@@ -37,10 +37,11 @@ $ docker run -d --name vscode-server \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
 hyunsu00/vscode-server
 
-$ docker run -it --name vscode-server -p 28585:8585 \
+$ docker run -it --name vscode-server  \
+-u "$(id -u):$(id -g)" \
+-e "USER=$USER" \
+-p 28585:8585 \
 -v "/hancom/docker/vscode-server:/home/coder" \
 -v /etc/localtime:/etc/localtime:ro -e TZ=Asia/Seoul \
--u "$(id -u):$(id -g)" \
--e "DOCKER_USER=$USER" \
 hyunsu00/vscode-server
 ```
