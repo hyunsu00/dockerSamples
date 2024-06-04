@@ -167,7 +167,7 @@ $ bash -c 'echo ""; \
 printf "컨테이너 초기화 중"; \
 while ! docker exec 'devel-rockylinux.8.8' test -f "'/tmp/initialized'"; do \
   printf "."; \
-  sleep 1; \
+  sleep 5; \
 done; \
 echo ""; \
 echo "컨테이너 초기화 완료"; \
