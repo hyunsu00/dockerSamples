@@ -4,23 +4,23 @@ FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # 패키지 목록 업데이트
-RUN apt update
+RUN apt-get update
 
 # systemctl 설치
-RUN apt install -qq -y --no-install-recommends init systemd
+RUN apt-get install -qq -y --no-install-recommends init systemd
 
 # 타임존 설정
 ENV TZ=Asia/Seoul
-RUN apt install -qq -y --no-install-recommends tzdata
+RUN apt-get install -qq -y --no-install-recommends tzdata
 
 # Locale 설정
-RUN apt install -qq -y --no-install-recommends locales && \
+RUN apt-get install -qq -y --no-install-recommends locales && \
     localedef -i ko_KR -f UTF-8 ko_KR.UTF-8 && \
     echo "LANG=ko_KR.UTF-8" > /etc/default/locale
 ENV LANG ko_KR.UTF-8
 
 # sudo 지원 및 sudo /usr/local/bin 디폴트 경로 추가
-RUN apt install -qq -y --no-install-recommends sudo && \
+RUN apt-get install -qq -y --no-install-recommends sudo && \
     sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
 
 #
@@ -34,16 +34,19 @@ ARG GID=$UID
 # 유저 생성
 RUN groupadd --gid $GID $UNAME && \
     useradd --uid $UID --gid $GID -m $UNAME && \
-    echo $UNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$UNAME && \
-    chmod 0440 /etc/sudoers.d/$UNAME
+    echo "$UNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 # fixuid 설치
-RUN apt install -qq -y --no-install-recommends ca-certificates curl && \
+RUN apt-get install -qq -y --no-install-recommends ca-certificates curl && \
     curl -fsSL https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
     chown root:root /usr/local/bin/fixuid && \
     chmod 4755 /usr/local/bin/fixuid && \
     mkdir -p /etc/fixuid && \
     printf "user: $UNAME\ngroup: $UNAME\n" > /etc/fixuid/config.yml
+
+# 작업 영역을 준비하기 위해 사용자가 컨테이너 시작 시 스크립트를 실행하도록 허용합니다.
+# https://github.com/coder/code-server/issues/5177
+ENV ENTRYPOINTD=${HOME}/entrypoint.d
 
 # 작업디렉토리설정
 WORKDIR /home/$UNAME
@@ -52,10 +55,12 @@ WORKDIR /home/$UNAME
 USER $UNAME
 
 # 패키지 캐쉬 정리 및 사용되지 않는 패키지 삭제 및 설치시 사용된 데이터 삭제
-RUN sudo apt clean && sudo apt autoremove && \
+RUN sudo apt-get clean && sudo apt-get autoremove && \
     rm -rf /var/lib/{apt,dpkg,cache,log}
 
 # 호스트의 uid, gid 맵핑
+ENV UNAME=$UNAME
+ENV USER=$UNAME
 COPY ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN sudo chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
