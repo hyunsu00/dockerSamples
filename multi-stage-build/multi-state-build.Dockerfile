@@ -46,4 +46,9 @@ FROM centos:7
 
 COPY --from=builder /opt/python/3.11.5-el7.x86_64 /opt/python/3.11.5-el7.x86_64
 
+# Add Python to PATH
+ENV PATH=/opt/python/3.11.5-el7.x86_64/bin:$PATH
+# Add Python shared library to LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/opt/python/3.11.5-el7.x86_64/lib:$LD_LIBRARY_PATH
+
 CMD ["tail", "-f", "/dev/null"]
