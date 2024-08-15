@@ -27,7 +27,7 @@ RUN apt-get install -qq -y --no-install-recommends sudo && \
 
 # 개발툴 설치 (Development Tools)
 RUN apt-get install -qq -y --no-install-recommends build-essential && \
-    apt-get install -qq -y --no-install-recommends cmake
+    apt-get install -qq -y --no-install-recommends git cmake
 
 #
 # 유저 생성
