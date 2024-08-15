@@ -22,7 +22,8 @@ RUN dnf install -y sudo && \
 RUN dnf install -y dnf-plugins-core epel-release
 
 # 개발툴 설치 (Development Tools)
-# 이곳에 개발툴을 설치합니다.
+RUN dnf groupinstall -y "Development Tools" && \
+    dnf install -y cmake
 
 #
 # 유저 생성

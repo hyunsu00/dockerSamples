@@ -26,7 +26,8 @@ RUN apt-get install -qq -y --no-install-recommends sudo && \
     sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
 
 # 개발툴 설치 (Development Tools)
-# 이곳에 개발툴을 설치합니다.
+RUN apt-get install -qq -y --no-install-recommends build-essential && \
+    apt-get install -qq -y --no-install-recommends cmake
 
 #
 # 유저 생성

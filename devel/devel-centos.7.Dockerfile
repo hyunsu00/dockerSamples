@@ -2,8 +2,11 @@ FROM centos:7
 
 ARG docker_build_files=./docker-build-files
 
-# 패키지 목록 업데이트
-RUN yum makecache
+# centos7 EOL repository fix
+RUN cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak && \
+    curl -o /etc/yum.repos.d/CentOS-Base.repo https://raw.githubusercontent.com/AtlasGondal/centos7-eol-repo-fix/main/CentOS-Base.repo && \
+    yum clean all && \
+    yum makecache
 
 # 타임존 설정
 ENV TZ=Asia/Seoul
@@ -21,7 +24,8 @@ RUN yum install -y sudo && \
 RUN yum install -y epel-release
 
 # 개발툴 설치 (Development Tools)
-# 이곳에 개발툴을 설치합니다.
+RUN yum groupinstall -y "Development Tools" && \
+    yum install -y cmake
 
 #
 # 유저 생성
