@@ -2,6 +2,13 @@ FROM centos:7
 # ENV 
 # 컨테이너내 /proc/1/environ 에 저장
 
+# centos7 EOL repository fix
+RUN cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak && \
+    curl -o /etc/yum.repos.d/CentOS-Base.repo https://raw.githubusercontent.com/AtlasGondal/centos7-eol-repo-fix/main/CentOS-Base.repo && \
+    yum clean all && \
+    yum makecache && \
+    yum update -y
+    
 #
 # Locale 설정
 #

@@ -1,0 +1,64 @@
+Loaded plugins: fastestmirror, ovl
+Loading mirror speeds from cached hostfile
+
+Group: 개발용 툴
+ Group-Id: development
+ Description: 기본 개발 환경.
+ Mandatory Packages:
+   =autoconf
+   =automake
+    binutils
+   =bison
+   =flex
+   =gcc
+   =gcc-c++
+   =gettext
+   =libtool
+   =make
+   =patch
+    pkgconfig
+   =redhat-rpm-config
+   =rpm-build
+   =rpm-sign
+ Default Packages:
+   =byacc
+   =cscope
+   =ctags
+   =diffstat
+   =doxygen
+   =elfutils
+   =gcc-gfortran
+   =git
+   =indent
+   =intltool
+   =patchutils
+   =rcs
+   =subversion
+   =swig
+   =systemtap
+ Optional Packages:
+   ElectricFence
+   ant
+   babel
+   bzr
+   chrpath
+   cmake
+   compat-gcc-44
+   compat-gcc-44-c++
+   cvs
+   dejagnu
+   expect
+   gcc-gnat
+   gcc-objc
+   gcc-objc++
+   imake
+   javapackages-tools
+   ksc
+   mercurial
+   mod_dav_svn
+   nasm
+   perltidy
+   rpmdevtools
+   rpmlint
+   systemtap-sdt-devel
+   systemtap-server

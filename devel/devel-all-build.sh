@@ -22,7 +22,7 @@ echo "build : docker.io/hyunsu00/devel-centos:7"
     docker build \
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-centos:7 \
-        -f ./devel-centos.7.Dockerfile .
+        -f ./devel-centos7.Dockerfile .
     if [ $? -eq 0 ]; then
         echo "succeed : docker.io/hyunsu00/devel-centos:7"
     else
@@ -36,7 +36,7 @@ echo "build : docker.io/hyunsu00/devel-rockylinux:8.8"
     docker build \
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-rockylinux:8.8 \
-        -f ./devel-rockylinux.8.8.Dockerfile .
+        -f ./devel-rockylinux8.8.Dockerfile .
 
     if [ $? -eq 0 ]; then
         echo "succeed : docker.io/hyunsu00/devel-rockylinux:8.8"

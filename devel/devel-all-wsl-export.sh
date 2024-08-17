@@ -24,7 +24,7 @@ function export_dockerContainer {
 echo "export : docker.io/hyunsu00/devel-centos:7"
 {
     dockerImage="hyunsu00/devel-centos:7"
-    exportFile="./wsl/wsl.devel.centos.7.tar.gz"
+    exportFile="./wsl/wsl.devel.centos7.tar.gz"
     export_dockerContainer $dockerImage $exportFile
 }
 
@@ -45,7 +45,7 @@ echo "export : docker.io/hyunsu00/devel-ubi9:9.2"
 echo "export : docker.io/hyunsu00/devel-rockylinux:8.8"
 {
     dockerImage="hyunsu00/devel-rockylinux:8.8"
-    exportFile="./wsl/wsl.devel.rockylinux.8.8.tar.gz"
+    exportFile="./wsl/wsl.devel.rockylinux8.8.tar.gz"
     export_dockerContainer $dockerImage $exportFile
 }
 
