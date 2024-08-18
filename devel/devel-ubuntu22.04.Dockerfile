@@ -33,7 +33,7 @@ RUN apt-get install -qq -y --no-install-recommends build-essential && \
 # 유저 생성
 #
 # 빌드시점 UNAME, UID, GID 설정
-ARG UNAME=devuser
+ARG UNAME=devpro
 ARG UID=1000
 ARG GID=$UID
 

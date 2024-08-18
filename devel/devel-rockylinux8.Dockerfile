@@ -3,7 +3,7 @@ FROM rockylinux:8
 ARG docker_build_files=./docker-build-files
 
 # 패키지 목록 업데이트
-RUN dnf updaet -y && dnf makecache
+RUN dnf update -y && dnf makecache
 
 # 타임존 설정
 ENV TZ=Asia/Seoul
@@ -29,7 +29,7 @@ RUN dnf groupinstall -y "Development Tools" && \
 # 유저 생성
 #
 # 빌드시점 UNAME, UID, GID 설정
-ARG UNAME=devuser
+ARG UNAME=devpro
 ARG UID=1000
 ARG GID=$UID
 

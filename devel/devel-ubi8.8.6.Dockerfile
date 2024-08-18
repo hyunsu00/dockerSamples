@@ -28,7 +28,7 @@ RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.n
 # 유저 생성
 #
 # 빌드시점 UNAME, UID, GID 설정
-ARG UNAME=devuser
+ARG UNAME=devpro
 ARG UID=1000
 ARG GID=$UID
 
