@@ -25,6 +25,15 @@ ENV LANG ko_KR.UTF-8
 RUN apt-get install -qq -y --no-install-recommends sudo && \
     sed -i 's/\(Defaults\s*secure_path="[^"]*\)/\1:\/usr\/local\/bin/' /etc/sudoers
 
+# 폰트설치(/usr/share/fonts)
+RUN apt-get install -qq -y --no-install-recommends fontconfig && \
+    echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections && \
+    apt-get install -qq -y --no-install-recommends ttf-mscorefonts-installer && \
+    apt-get install -qq -y --no-install-recommends fonts-noto-cjk && \
+    apt-get install -qq -y --no-install-recommends fonts-noto && \
+    apt-get install -qq -y --no-install-recommends fonts-nanum && \
+    fc-cache -fv
+
 # 개발툴 설치 (Development Tools)
 RUN apt-get install -qq -y --no-install-recommends build-essential && \
     apt-get install -qq -y --no-install-recommends git cmake
@@ -61,10 +70,6 @@ WORKDIR /home/$UNAME
 # 기본 사용자 설정
 USER $UNAME
 
-# 패키지 캐쉬 정리 및 사용되지 않는 패키지 삭제 및 설치시 사용된 데이터 삭제
-RUN sudo apt-get clean && sudo apt-get autoremove && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}
-
 #
 # wsl
 #
@@ -76,6 +81,10 @@ RUN sudo sed -i "s/\(${UNAME}:.*:\)\/bin\/sh/\1\/bin\/bash/" /etc/passwd
 # 유틸리티 설치
 #
 RUN sudo apt-get install -qq -y --no-install-recommends dumb-init
+
+# 패키지 캐쉬 정리 및 사용되지 않는 패키지 삭제 및 설치시 사용된 데이터 삭제
+RUN sudo apt-get clean && sudo apt-get autoremove && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME

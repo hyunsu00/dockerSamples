@@ -21,6 +21,11 @@ RUN dnf install -y sudo && \
 # EPEL Repository 설치
 RUN dnf install -y dnf-plugins-core epel-release
 
+# 폰트설치(/usr/share/fonts)
+RUN dnf install -y https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm && \
+    dnf install -y google-noto-sans-cjk-ttc-fonts && \
+    fc-cache -f -v
+
 # 개발툴 설치 (Development Tools)
 RUN dnf groupinstall -y "Development Tools" && \
     dnf install -y cmake
@@ -56,9 +61,6 @@ WORKDIR /home/$UNAME
 # 기본 사용자 설정
 USER $UNAME
 
-# dnf 패키지 매니저 캐시 정리
-RUN sudo dnf clean all
-
 #
 # wsl
 #
@@ -70,6 +72,9 @@ RUN sudo ln -sf /etc/locale.conf /etc/default/locale
 # 유틸리티 설치
 #
 RUN sudo dnf install -y ncurses wget dumb-init
+
+# dnf 패키지 매니저 캐시 정리
+RUN sudo dnf clean all
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME

@@ -73,9 +73,6 @@ USER $UNAME
 # gcc-7.x 디폴트 ($UNAME)
 RUN echo -e "source /opt/rh/devtoolset-7/enable" >> ~/.bashrc
 
-# yum 패키지 매니저 캐시 정리
-RUN sudo yum clean all
-
 #
 # wsl
 #
@@ -89,6 +86,9 @@ RUN sudo ln -sf /etc/locale.conf /etc/default/locale
 RUN sudo yum install -y wget && \
     sudo wget -O /usr/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 && \
     sudo chmod +x /usr/bin/dumb-init
+
+# yum 패키지 매니저 캐시 정리
+RUN sudo yum clean all
 
 # 호스트의 uid, gid 맵핑
 ENV UNAME=$UNAME
