@@ -1,9 +1,9 @@
-FROM rockylinux:8.8
+FROM rockylinux:8
 
 ARG docker_build_files=./docker-build-files
 
 # 패키지 목록 업데이트
-RUN dnf makecache
+RUN dnf updaet -y && dnf makecache
 
 # 타임존 설정
 ENV TZ=Asia/Seoul

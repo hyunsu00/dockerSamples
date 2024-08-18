@@ -7,7 +7,7 @@ echo "build : docker.io/hyunsu00/devel-node:16.13.2-bullseye"
 {
     docker build \
         -t hyunsu00/devel-node:16.13.2-bullseye \
-        -f ./devel-node.16.13.2-bullseye.Dockerfile .
+        -f ./devel-node16.13.2-bullseye.Dockerfile .
 
     if [ $? -eq 0 ]; then
         echo "succeed : docker.io/hyunsu00/devel-node:16.13.2-bullseye"
@@ -31,17 +31,17 @@ echo "build : docker.io/hyunsu00/devel-centos:7"
     fi
 }
 
-echo "build : docker.io/hyunsu00/devel-rockylinux:8.8"
+echo "build : docker.io/hyunsu00/devel-rockylinux:8"
 {
     docker build \
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
-        -t hyunsu00/devel-rockylinux:8.8 \
-        -f ./devel-rockylinux8.8.Dockerfile .
+        -t hyunsu00/devel-rockylinux:8 \
+        -f ./devel-rockylinux8.Dockerfile .
 
     if [ $? -eq 0 ]; then
-        echo "succeed : docker.io/hyunsu00/devel-rockylinux:8.8"
+        echo "succeed : docker.io/hyunsu00/devel-rockylinux:8"
     else
-        echo "failed : docker.io/hyunsu00/devel-rockylinux:8.8"
+        echo "failed : docker.io/hyunsu00/devel-rockylinux:8"
         exit 1
     fi
 }
@@ -81,7 +81,7 @@ echo "build : docker.io/hyunsu00/devel-ubuntu:22.04"
     docker build \
         --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
         -t hyunsu00/devel-ubuntu:22.04 \
-        -f ./devel-ubuntu.22.04.Dockerfile .
+        -f ./devel-ubuntu22.04.Dockerfile .
 
     if [ $? -eq 0 ]; then
         echo "succeed : docker.io/hyunsu00/devel-ubuntu:22.04"

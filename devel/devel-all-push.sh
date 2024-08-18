@@ -51,14 +51,14 @@ echo "push : docker.io/hyunsu00/devel-ubi9:9.2"
     fi
 }
 
-echo "push : docker.io/hyunsu00/devel-rockylinux:8.8"
+echo "push : docker.io/hyunsu00/devel-rockylinux:8"
 {
-    docker push hyunsu00/devel-rockylinux:8.8
+    docker push hyunsu00/devel-rockylinux:8
 
     if [ $? -eq 0 ]; then
-        echo "succeed : docker.io/hyunsu00/devel-rockylinux:8.8"
+        echo "succeed : docker.io/hyunsu00/devel-rockylinux:8"
     else
-        echo "failed : docker.io/hyunsu00/devel-rockylinux:8.8"
+        echo "failed : docker.io/hyunsu00/devel-rockylinux:8"
         exit 1
     fi
 }
