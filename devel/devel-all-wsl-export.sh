@@ -42,16 +42,16 @@ echo "export : docker.io/hyunsu00/devel-ubi9:9.2"
     export_dockerContainer $dockerImage $exportFile
 }
 
-echo "export : docker.io/hyunsu00/devel-rockylinux:8.8"
+echo "export : docker.io/hyunsu00/devel-rockylinux:8"
 {
-    dockerImage="hyunsu00/devel-rockylinux:8.8"
-    exportFile="./wsl/wsl.devel.rockylinux8.8.tar.gz"
+    dockerImage="hyunsu00/devel-rockylinux:8"
+    exportFile="./wsl/wsl.devel.rockylinux8.tar.gz"
     export_dockerContainer $dockerImage $exportFile
 }
 
 echo "export : docker.io/hyunsu00/devel-ubuntu:22.04"
 {
     dockerImage="hyunsu00/devel-ubuntu:22.04"
-    exportFile="./wsl/wsl.devel.ubuntu.22.04.tar.gz"
+    exportFile="./wsl/wsl.devel.ubuntu22.04.tar.gz"
     export_dockerContainer $dockerImage $exportFile
 }
