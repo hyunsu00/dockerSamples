@@ -20,7 +20,7 @@ echo "build : docker.io/hyunsu00/devel-node:16.13.2-bullseye"
 echo "build : docker.io/hyunsu00/devel-centos:7"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devpro \
         -t hyunsu00/devel-centos:7 \
         -f ./devel-centos7.Dockerfile .
     if [ $? -eq 0 ]; then
@@ -34,7 +34,7 @@ echo "build : docker.io/hyunsu00/devel-centos:7"
 echo "build : docker.io/hyunsu00/devel-rockylinux:8"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devpro \
         -t hyunsu00/devel-rockylinux:8 \
         -f ./devel-rockylinux8.Dockerfile .
 
@@ -49,7 +49,7 @@ echo "build : docker.io/hyunsu00/devel-rockylinux:8"
 echo "build : docker.io/hyunsu00/devel-ubi8:8.6"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devpro \
         -t hyunsu00/devel-ubi8:8.6 \
         -f ./devel-ubi8.8.6.Dockerfile .
 
@@ -64,7 +64,7 @@ echo "build : docker.io/hyunsu00/devel-ubi8:8.6"
 echo "build : docker.io/hyunsu00/devel-ubi9:9.2"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devpro \
         -t hyunsu00/devel-ubi9:9.2 \
         -f ./devel-ubi9.9.2.Dockerfile .
 
@@ -79,7 +79,7 @@ echo "build : docker.io/hyunsu00/devel-ubi9:9.2"
 echo "build : docker.io/hyunsu00/devel-ubuntu:22.04"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devpro \
         -t hyunsu00/devel-ubuntu:22.04 \
         -f ./devel-ubuntu22.04.Dockerfile .
 

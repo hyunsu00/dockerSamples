@@ -6,7 +6,7 @@ cd "$(dirname "$0")" || exit
 echo "build : docker.io/hyunsu00/clean-centos:7"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=installpro \
         -t hyunsu00/clean-centos:7 \
         -f ./clean-centos7.Dockerfile .
     if [ $? -eq 0 ]; then
@@ -20,7 +20,7 @@ echo "build : docker.io/hyunsu00/clean-centos:7"
 echo "build : docker.io/hyunsu00/clean-rockylinux:8"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=installpro \
         -t hyunsu00/clean-rockylinux:8 \
         -f ./clean-rockylinux8.Dockerfile .
 
@@ -35,7 +35,7 @@ echo "build : docker.io/hyunsu00/clean-rockylinux:8"
 echo "build : docker.io/hyunsu00/clean-ubuntu:22.04"
 {
     docker build \
-        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=devuser \
+        --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=installpro \
         -t hyunsu00/clean-ubuntu:22.04 \
         -f ./clean-ubuntu22.04.Dockerfile .
 
