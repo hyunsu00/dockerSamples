@@ -24,16 +24,20 @@ RUN yum install -y sudo && \
 # EPEL Repository 설치
 RUN yum install -y epel-release
 
-# 폰트설치
-RUN yum install -y https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+# 폰트설치(/usr/share/fonts)
+RUN yum install -y https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm && \
+    yum install -y google-noto-sans-cjk-fonts && \
+    fc-cache -f -v
 
 # 개발툴 설치 (Development Tools)
 RUN yum groupinstall -y "Development Tools" && \
     yum install -y cmake
 
-# devtoolset-7 설치
+# devtoolset-7 설치 및 gcc-7.x 디폴트 (root)
 COPY ${docker_build_files}/centos7/devel/devtoolset-7/ /tmp/centos7/devel/devtoolset-7/
-RUN yum install -y /tmp/centos7/devel/devtoolset-7/*.rpm
+RUN yum install -y /tmp/centos7/devel/devtoolset-7/*.rpm && \
+    echo -e "source /opt/rh/devtoolset-7/enable" >> ~/.bashrc && \
+    rm -rf /tmp/centos7/devel/devtoolset-7
 
 #
 # 유저 생성
@@ -65,6 +69,9 @@ WORKDIR /home/$UNAME
 
 # 기본 사용자 설정
 USER $UNAME
+
+# gcc-7.x 디폴트 ($UNAME)
+RUN echo -e "source /opt/rh/devtoolset-7/enable" >> ~/.bashrc
 
 # yum 패키지 매니저 캐시 정리
 RUN sudo yum clean all
