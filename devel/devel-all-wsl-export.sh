@@ -28,19 +28,19 @@ echo "export : docker.io/hyunsu00/devel-centos:7"
     export_dockerContainer $dockerImage $exportFile
 }
 
-echo "export : docker.io/hyunsu00/devel-ubi8:8.6"
-{
-    dockerImage="hyunsu00/devel-ubi8:8.6"
-    exportFile="./wsl/wsl.devel.ubi8.8.6.tar.gz"
-    export_dockerContainer $dockerImage $exportFile
-}
+# echo "export : docker.io/hyunsu00/devel-ubi8:8.6"
+# {
+#     dockerImage="hyunsu00/devel-ubi8:8.6"
+#     exportFile="./wsl/wsl.devel.ubi8.8.6.tar.gz"
+#     export_dockerContainer $dockerImage $exportFile
+# }
 
-echo "export : docker.io/hyunsu00/devel-ubi9:9.2"
-{
-    dockerImage="hyunsu00/devel-ubi9:9.2"
-    exportFile="./wsl/wsl.devel.ubi9.9.2.tar.gz"
-    export_dockerContainer $dockerImage $exportFile
-}
+# echo "export : docker.io/hyunsu00/devel-ubi9:9.2"
+# {
+#     dockerImage="hyunsu00/devel-ubi9:9.2"
+#     exportFile="./wsl/wsl.devel.ubi9.9.2.tar.gz"
+#     export_dockerContainer $dockerImage $exportFile
+# }
 
 echo "export : docker.io/hyunsu00/devel-rockylinux:8"
 {

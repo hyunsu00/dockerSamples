@@ -74,6 +74,11 @@ USER $UNAME
 RUN echo -e "source /opt/rh/devtoolset-7/enable" >> ~/.bashrc
 
 #
+# WSLInterop.conf
+#
+COPY ${docker_build_files}/WSLInterop.conf /usr/lib/binfmt.d/WSLInterop.conf
+
+#
 # wsl
 #
 COPY ${docker_build_files}/wsl.conf /etc/wsl.conf

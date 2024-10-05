@@ -62,6 +62,11 @@ WORKDIR /home/$UNAME
 USER $UNAME
 
 #
+# WSLInterop.conf
+#
+COPY ${docker_build_files}/WSLInterop.conf /usr/lib/binfmt.d/WSLInterop.conf
+
+#
 # wsl
 #
 COPY ${docker_build_files}/wsl.conf /etc/wsl.conf

@@ -59,6 +59,11 @@ USER $UNAME
 RUN sudo dnf clean all
 
 #
+# WSLInterop.conf
+#
+COPY ${docker_build_files}/WSLInterop.conf /usr/lib/binfmt.d/WSLInterop.conf
+
+#
 # wsl
 #
 COPY ${docker_build_files}/wsl.conf /etc/wsl.conf
