@@ -35,9 +35,12 @@ RUN yum groupinstall -y "Development Tools" && \
 
 # devtoolset-7 설치 및 gcc-7.x 디폴트 (root)
 COPY ${docker_build_files}/centos7/devel/devtoolset-7/ /tmp/centos7/devel/devtoolset-7/
+COPY ${docker_build_files}/centos7/sudo /tmp/centos7/
 RUN yum install -y /tmp/centos7/devel/devtoolset-7/*.rpm && \
+    cp -f /tmp/centos7/sudo /opt/rh/devtoolset-7/root/bin/sudo && \
     echo -e "source /opt/rh/devtoolset-7/enable" >> ~/.bashrc && \
-    rm -rf /tmp/centos7/devel/devtoolset-7
+    rm -rf /tmp/centos7/devel/devtoolset-7 && \
+    rm -f /tmp/centos7/sudo
 
 #
 # 유저 생성
